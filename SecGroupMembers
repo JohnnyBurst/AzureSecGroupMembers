@@ -1,0 +1,9 @@
+#Connect to AzureAD
+Connect-AzureAD
+#Export list of security groups and security group object ID's
+Get-AzureADGroup -Filter "SecurityEnabled eq true and MailEnabled eq false" | export-csv -path c:\users\username\documents\secgroups.csv
+#Open exported file and keep open to replace the secgroupIDnumber below with each group number
+$group = Get-AzureADGroup -ObjectId "secgroupIDnumber"
+$members = Get-AzureADGroupMember -ObjectId $group.ObjectId
+$members | Export-Csv -Path c:\users\username\documents\groups\FileName.csv -NoTypeInformation
+#replace secgroupidnumber within the quotes and rerun
